@@ -1,0 +1,58 @@
+<ion-view view-title="Event Details">
+
+	<ion-content>
+	
+		<div class="card">
+			<div class="item item-body item-text-wrap">
+				<h2>{{event.name}}
+				<p>{{event.description}}</p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col col-offset-10">
+				   <h4>To Do</h4>
+					<ul class="list">
+						<li>
+							 <ion-checkbox ng-model="isChecked1">Fire alarm in attic is installed</ion-checkbox>
+							 <ion-checkbox ng-model="isChecked2">Leak at patio door is sealed</ion-checkbox>
+							 <ion-checkbox ng-model="isChecked3">Old furniture removed from garage</ion-checkbox>
+						</li>
+					</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col col-offset-10">
+				   <h4>Participants</h4>
+					<ion-list>
+
+						<div class="item-avatar" >
+							<img ng-src="{{baseURL+leader.image}}">
+							<p><strong>Jock Lennox<strong><br>
+							<strong><small>Buyer RE Agent</small></strong></p> 
+							<div class="item-text-wrap">Rent, buy, or sell property for clients. Perform duties, such as study property listings, interview prospective ...</div>
+							<div class="button-bar">
+							   <a class="button button-positive button-small icon ion-android-call"></a>
+							   <a class="button button-assertive button-small icon ion-android-mail"></a>
+							   <a class="button button-energized button-small icon ion-android-chat"></a>
+							</div>
+<br>							
+						</div>
+						
+						<div class="item-avatar" >
+							<img ng-src="{{baseURL+leader.image}}">
+							<p><strong>Pueblo Makkartonos<strong><br>
+							<strong><small>Home Inspector</small></strong></p> 
+							<div class="item-text-wrap"> non-invasive examination of the condition of a home, often in connection with the sale of that home ...</div>
+							<div class="button-bar">
+							   <a class="button button-positive button-small icon ion-android-call"></a>
+							   <a class="button button-assertive button-small icon ion-android-mail"></a>
+							   <a class="button button-energized button-small icon ion-android-chat"></a>
+							</div> 
+						</div>
+					</ion-list>
+			</div>
+		</div>
+
+  </ion-content>
+</ion-view>
