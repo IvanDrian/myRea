@@ -28,6 +28,39 @@ var prerequisiteSchema = new Schema({
     timestamps: true
 });
 
+var participantSchema = new Schema({
+    firstName:  {
+        type: String,
+        required: true
+    },
+    lastName:  {
+        type: String,
+        required: true
+    }, 
+    role:  {
+        type: String,
+        required: true
+    },
+    roleDescription:  {
+        type: String,
+        required: true
+    },      
+    phone:  {
+        type: String,
+        required: true
+    },    
+    text:  {
+        type: String,
+        required: true
+    }, 
+    email:  {
+        type: String,
+        required: true
+    }    
+}, {
+    timestamps: true
+});
+
 var eventSchema = new Schema({
     name: {
         type: String,
@@ -50,7 +83,8 @@ var eventSchema = new Schema({
         required: true
     },
 	prerequisites:[prerequisiteSchema],
-    todos:[todoSchema]
+    todos:[todoSchema],
+    participants:[participantSchema]
 }, {
     timestamps: true
 });
