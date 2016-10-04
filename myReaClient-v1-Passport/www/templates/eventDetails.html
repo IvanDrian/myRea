@@ -1,14 +1,13 @@
-<ion-view view-title="Event Details">
+<ion-view>
+<ion-nav-title>{{eventDetailsTitle}}</ion-nav-title>
 	<ion-content>
-		<div class="card">
 			<div class="item item-body item-text-wrap">
-				<h2>{{event.name}}</h2>
+				<h1>{{event.name}}</h1>
 				<p>{{event.description}}</p>
 			</div>
-		</div>
     
     <div class="row">
-			<div class="col col-offset-10">
+			<div class="col col-offset-11">
 				<h4>Prerequisites</h4>
         <ul class="list">
           <li ng-repeat="prerequisite in event.prerequisites">
@@ -19,7 +18,7 @@
 		</div>
 
 		<div class="row">
-			<div class="col col-offset-10">
+			<div class="col col-offset-12">
 				<h4>To Do</h4>
         <ul class="list">
           <li ng-repeat="todo in event.todos">
@@ -28,26 +27,28 @@
         </ul>
 			</div>
 		</div>
+    
 		<div class="row">
-			<div class="col col-offset-10">
+			<div class="col col-offset-11">
 				<h4>Participants</h4>
-					<ion-list>
-
-						<div class="item-avatar" >
-							<img ng-src="{{baseURL+leader.image}}">
-							<p><strong>Jock Lennox<strong><br>
-							<strong><small>Buyer RE Agent</small></strong></p> 
-							<div class="item-text-wrap">Rent, buy, or sell property for clients. Perform duties, such as study property listings, interview prospective ...</div>
-							<div class="button-bar">
-							   <a class="button button-positive button-small icon ion-android-call"></a>
-							   <a class="button button-assertive button-small icon ion-android-mail"></a>
-							   <a class="button button-energized button-small icon ion-android-chat"></a>
-							</div>
-<br>							
-						</div>
-					</ion-list>
+          <ul class="list">
+            <li ng-repeat="participant in event.participants">
+              <div class="item item-avatar" >
+                <img ng-src="{{baseURL+leader.image}}">
+                <p><strong>{{participant.firstName}} {{participant.lastName}}<strong><br>
+                <strong><small>{{participant.role}}</small></strong></p> 
+                <div class="item-text-wrap">{{participant.roleDescription}}</div>
+                <div class="button-bar">
+                   <a class="button button-positive button-small icon ion-android-call"></a>
+                   <a class="button button-assertive button-small icon ion-android-mail"></a>
+                   <a class="button button-energized button-small icon ion-android-chat"></a>
+                </div>              
+              </div>                
+            </li>
+          </ul>
 			</div>
 		</div>
 
   </ion-content>
 </ion-view>
+
