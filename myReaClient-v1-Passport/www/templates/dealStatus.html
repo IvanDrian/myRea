@@ -1,5 +1,18 @@
 <ion-view view-title="Deal Status">
   <ion-content>
-    <h1>Deal Status</h1>
+    <div class="item item-divider">
+      <h1>{{currentStatusOfDeal()}}</h1>
+    </div>
+    <div class="row">
+			<div class="col col-offset-11">
+      <h4>Event In Progress:</h4>
+        <div class="card">
+          <p><strong>{{event.name}}</strong><br>
+          <div class="item-text-wrap">{{event.description}}</div>
+          <p><strong>Started: </strong>{{event.start | date:'MMM. dd, yyyy'}}</p>
+          <p><strong>Due:&nbsp;&nbsp;&nbsp;</strong>{{event.end | date:'MMM. dd, yyyy'}}</p>
+        </div>
+      </div>
+    </div>
   </ion-content>
 </ion-view>
