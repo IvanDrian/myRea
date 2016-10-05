@@ -48,7 +48,8 @@ angular.module('myRea', ['ionic', 'myRea.controllers', 'myRea.services'])
 		url: '/dealStatus',
 		views: {
 		  'menuContent': {
-			templateUrl: 'templates/dealStatus.html'
+        templateUrl: 'templates/dealStatus.html',
+        controller: 'dealStatusController'
 		  }
 		}
 	})
@@ -95,7 +96,6 @@ angular.module('myRea', ['ionic', 'myRea.controllers', 'myRea.services'])
 		  controller: 'eventDetailsController',
 			resolve: {
 				event: ['$stateParams','eventFactory', function($stateParams, eventFactory){
-					//return eventFactory.get({id:'57f0213cbebd802704ae5aed'});
 					return eventFactory.get({id:$stateParams.id});
 				}]
 			}		  

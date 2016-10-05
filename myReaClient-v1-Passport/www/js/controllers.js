@@ -78,14 +78,45 @@ angular.module('myRea.controllers', [])
   
   // Satus
   $scope.satusName = function( status) {
-	  if( status == 0) return 'Not Started';
-	  if( status == 1) return 'In Progress';
-	  if( status == 2) return 'Completed';
-	  if( status == 3) return 'Overdue';
+    if( status == 0) return 'Not Started';
+    if( status == 1) return 'In Progress';
+    if( status == 2) return 'Completed';
+    if( status == 3) return 'Overdue';
   
-	  return 'UNKNOWN';
+    return 'UNKNOWN';
   }
 })
+
+.controller('dealStatusController', 
+    ['$scope', 'eventFactory', 'baseURL', 
+		function($scope, eventFactory, baseURL) {
+
+			$scope.baseURL = baseURL;
+      
+      eventFactory.query({
+          featured: "true"
+        },
+        function (response) {
+            var events = response;
+            
+            for (var i=0; i < events.length; i++) {
+              if (events[i].status == 1) {
+                $scope.event = events[i];
+                break;
+              }
+            }
+        },
+        function (response) {
+            $scope.message = "Error: " + response.status + " " + response.statusText;
+        }
+      );
+
+      $scope.currentStatusOfDeal = function() {
+        return 'On Track';
+      };
+		}
+	]
+)
 
 .controller('eventsController', 
     ['$scope', 'events', 'baseURL', 
@@ -120,7 +151,7 @@ angular.module('myRea.controllers', [])
 							function(response) {
 								$scope.message = "Error: "+response.status + " " + response.statusText;
 							}
-			);
+			);          
 		}
 	]
 )
