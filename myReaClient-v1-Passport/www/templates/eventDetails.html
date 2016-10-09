@@ -1,9 +1,10 @@
-<ion-view>
-<ion-nav-title>{{eventDetailsTitle}}</ion-nav-title>
+<ion-view >
+<!-- This never works fro parent-child. need to modify parent. see events.html-->
+  <ion-nav-title>{{myTitle}}</ion-nav-title>
+
 	<ion-content>
 			<div class="item item-body item-text-wrap">
-				<h1>{{event.name}}</h1>
-				<p>{{event.description}}</p>
+				<p><b>{{event.description}}</p>
 			</div>
     
     <div class="row">
@@ -51,4 +52,7 @@
 
   </ion-content>
 </ion-view>
+
+
+
 
