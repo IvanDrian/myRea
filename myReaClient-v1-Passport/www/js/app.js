@@ -31,7 +31,7 @@ angular.module('myRea', ['ionic', 'myRea.controllers', 'myRea.services'])
     $rootScope.$on('$stateChangeSuccess', function () {
         console.log('done');
         $rootScope.$broadcast('loading:hide');
-  });
+    });
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -93,12 +93,12 @@ angular.module('myRea', ['ionic', 'myRea.controllers', 'myRea.services'])
       views: {
         'menuContent': {
           templateUrl: 'templates/eventDetails.html',
-		  controller: 'eventDetailsController',
-			resolve: {
-				event: ['$stateParams','eventFactory', function($stateParams, eventFactory){
-					return eventFactory.get({id:$stateParams.id});
-				}]
-			}		  
+          controller: 'eventDetailsController',
+          resolve: {
+            event: ['$stateParams','eventFactory', function($stateParams, eventFactory){
+              return eventFactory.get({id:$stateParams.id});
+            }]
+          }		  
         }
       }
     })

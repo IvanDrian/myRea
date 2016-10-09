@@ -1,6 +1,6 @@
 angular.module('myRea.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $rootScope, $ionicModal, $timeout) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -9,6 +9,7 @@ angular.module('myRea.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
+    $rootScope.enableRightSideMenu = true;
   // =============================
   // Form data for the login modal
   // -----------------------------
@@ -119,8 +120,8 @@ angular.module('myRea.controllers', [])
 )
 
 .controller('eventsController', 
-    ['$scope', 'events', 'baseURL', 
-		function($scope, events, baseURL) {
+    ['$scope', '$rootScope', 'events', 'baseURL', 
+		function($scope, $rootScope, events, baseURL) {
 
 			$scope.baseURL = baseURL;
 			$scope.showDetails = false;
@@ -131,12 +132,26 @@ angular.module('myRea.controllers', [])
 			};
 
 			console.log($scope.events);
+      
+      $scope.$on('$ionicView.beforeEnter', function (e, data) { 
+        $rootScope.myTitle = 'Timeline';
+      });      
+
 		}
 	]
 )
+
+.controller('MenuCtrl', function($scope, $rootScope, $ionicHistory, $state) {
+  $rootScope.enableRightSideMenu = true;
+  
+  $scope.goBack = function() {
+    $ionicHistory.goBack();
+  }
+})
+
 .controller('eventDetailsController', 
-	['$scope', '$stateParams', 'event', 'eventFactory', 'baseURL', '$ionicModal', '$ionicPlatform', 
-		function ($scope, $stateParams, event, eventFactory, baseURL, $ionicModal, $ionicPlatform) {
+	['$scope', '$rootScope', '$stateParams', 'event', 'eventFactory', 'baseURL', '$ionicModal', '$ionicPlatform', 
+		function ($scope, $rootScope, $stateParams, event, eventFactory, baseURL, $ionicModal, $ionicPlatform) {
 			$scope.baseURL = baseURL;
 			$scope.event = event;
 			$scope.showEvent = false;
@@ -147,11 +162,22 @@ angular.module('myRea.controllers', [])
 							function(response){
 								$scope.event = response;
 								$scope.showEvent = true;
+                $rootScope.myTitle = response.name; 
 							},
 							function(response) {
 								$scope.message = "Error: "+response.status + " " + response.statusText;
 							}
-			);          
+			);  
+      
+      $scope.$on('$ionicView.loaded', function (e, data) { 
+        $rootScope.enableRightSideMenu = false;
+        $rootScope.showHome = true;
+      });
+
+      $scope.$on('$ionicView.unloaded', function (e, data) { 
+        $rootScope.enableRightSideMenu = true;
+        $rootScope.showHome = false;
+      }); 
 		}
 	]
 )
