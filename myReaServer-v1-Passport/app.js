@@ -20,6 +20,7 @@ db.once('open', function () {
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var eventRouter = require('./routes/eventRouter');
+var participantRouter = require('./routes/participantRouter');
 
 var app = express();
 
@@ -48,10 +49,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/events', eventRouter);
+app.use('/participants', participantRouter);
 
 //info
 console.log('====================');
-console.log('myReaServer v0.1.0.0');
+console.log('myReaServer v0.0.2.0');
 console.log('--------------------');
 console.log('Options:');
 if( app.get('isAuthenticationOff')) console.log('Authentication is Off');
