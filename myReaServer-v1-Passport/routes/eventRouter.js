@@ -2,6 +2,9 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
+
+require('../models/participants'); 
+
 var events = require('../models/events');
 var Verify = require('./verify');
 
@@ -11,7 +14,9 @@ eventRouter.use(bodyParser.json());
 eventRouter.route('/')
 
 .get(Verify.verifyOrdinaryUser, function (req, res, next) {
-    events.find({}, function (err, event) {
+    events.find({})
+    .populate('participants')
+    .exec(function (err, event) {
         if (err) throw err;
         res.json(event);
     });
@@ -41,7 +46,9 @@ eventRouter.route('/')
 eventRouter.route('/:eventId')
 
 .get(Verify.verifyOrdinaryUser, function (req, res, next) {
-    events.findById(req.params.eventId, function (err, event) {
+    events.findById(req.params.eventId)
+    .populate('participants')
+    .exec(function (err, event) {
         if (err) throw err;
         res.json(event);
     });
@@ -188,7 +195,7 @@ eventRouter.route('/:eventId/prerequisites/:prerequisiteId')
         event.prerequisites.push(req.body);
         event.save(function (err, event) {
             if (err) throw err;
-            console.log('Updated Comments!');
+            console.log('prerequisite is updated');
             res.json(event);
         });
     });
@@ -201,6 +208,90 @@ eventRouter.route('/:eventId/prerequisites/:prerequisiteId')
             if (err) throw err;
             res.json(resp);
         });
+    });
+});
+
+//--------------
+// participants
+//==============
+
+eventRouter.route('/:eventId/participants')
+.get(Verify.verifyOrdinaryUser, function (req, res, next) {
+    events.findById(req.params.eventId)
+    .populate('participants')
+    .exec(function (err, event) {
+        if (err) throw err;
+        res.json(event.participants);
+    });
+})
+
+.post(Verify.verifyOrdinaryUser, function (req, res, next) {
+    events.findById(req.params.eventId, function (err, event) {
+        if (err) throw err;
+        event.participants.push(req.body);
+        event.save(function (err, event) {
+            if (err) throw err;
+            console.log('participant was added');
+            res.json(event);
+        });
+    });
+})
+
+.delete(Verify.verifyOrdinaryUser, function (req, res, next) {
+    events.findById(req.params.eventId, function (err, event) {
+        if (err) throw err;
+        for (var i = (event.participants.length - 1); i >= 0; i--) {
+            event.participants.id(event.participants[i]._id).remove();
+        }
+        event.save(function (err, result) {
+            if (err) throw err;
+            res.writeHead(200, {
+                'Content-Type': 'text/plain'
+            });
+            res.end('all participants were deleted');
+        });
+    });
+});
+
+eventRouter.route('/:eventId/participants/:participantId')
+.get(Verify.verifyOrdinaryUser, function (req, res, next) {
+    events.findById(req.params.eventId)
+    .populate('participants')
+    .exec(function (err, event) {
+        if (err) throw err;
+        res.json(event.getParticipantById(req.params.participantId));
+    });
+})
+
+// We delete the ObjectId of existing paricipant and insert 
+// ObjectId of another participant. 
+.put(Verify.verifyOrdinaryUser, function (req, res, next) {
+    events.findById(req.params.eventId, function (err, event) {
+        if (err) throw err;
+        var index = event.getParticipantIndexById( req.params.participantId);
+        if( index != -1) {
+            event.participants.splice(index, 1);
+            event.participants.push(req.body);
+            event.save(function (err, event) {
+                if (err) throw err;
+                console.log('participant is replaced');
+                res.json(event);
+            });
+        }
+    });
+})
+
+// We delete the ObjectId of existing paricipant 
+.delete(Verify.verifyOrdinaryUser, function (req, res, next) {
+    events.findById(req.params.eventId, function (err, event) {
+        var index = event.getParticipantIndexById( req.params.participantId);
+        if( index != -1) {
+            event.participants.splice(index, 1);
+            event.save(function (err, resp) {
+                if (err) throw err;
+                res.json(resp);
+            });
+        }
     });
 });
 
