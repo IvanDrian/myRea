@@ -53,7 +53,7 @@ app.use('/participants', participantRouter);
 
 //info
 console.log('====================');
-console.log('myReaServer v0.0.2.0');
+console.log('myReaServer v0.0.3.0');
 console.log('--------------------');
 console.log('Options:');
 if( app.get('isAuthenticationOff')) console.log('Authentication is Off');
