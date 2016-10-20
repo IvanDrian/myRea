@@ -73,30 +73,30 @@ angular.module('myRea', ['ionic', 'myRea.controllers', 'myRea.services'])
     })
 	
 	
-    .state('app.events', {
-      url: '/events',
+    .state('app.steps', {
+      url: '/steps',
       views: {
         'menuContent': {
-          templateUrl: 'templates/events.html',
-          controller: 'eventsController',
+          templateUrl: 'templates/steps.html',
+          controller: 'stepsController',
           resolve: {
-            events:  ['eventFactory', function(eventFactory){
-              return eventFactory.query();
+            steps:  ['stepFactory', function(stepFactory){
+              return stepFactory.query();
             }]
           }
         }
       }
     })
 	
-	.state('app.eventDetails', {
-      url: '/events/{id}',
+	.state('app.stepDetails', {
+      url: '/steps/{id}',
       views: {
         'menuContent': {
-          templateUrl: 'templates/eventDetails.html',
-          controller: 'eventDetailsController',
+          templateUrl: 'templates/stepDetails.html',
+          controller: 'stepDetailsController',
           resolve: {
-            event: ['$stateParams','eventFactory', function($stateParams, eventFactory){
-              return eventFactory.get({id:$stateParams.id});
+            step: ['$stateParams','stepFactory', function($stateParams, stepFactory){
+              return stepFactory.get({id:$stateParams.id});
             }]
           }		  
         }

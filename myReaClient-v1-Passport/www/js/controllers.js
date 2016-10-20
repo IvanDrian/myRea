@@ -5,7 +5,7 @@ angular.module('myRea.controllers', [])
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
+  // listen for the $ionicView.enter step:
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
@@ -62,7 +62,7 @@ angular.module('myRea.controllers', [])
 
   // Open the logout modal
   $scope.logout = function() {
-	console.log('Doing logout');
+  console.log('Doing logout');
     $scope.logoutModal.show();
   };
 
@@ -89,20 +89,20 @@ angular.module('myRea.controllers', [])
 })
 
 .controller('dealStatusController', 
-    ['$scope', 'eventFactory', 'baseURL', 
-		function($scope, eventFactory, baseURL) {
+    ['$scope', 'stepFactory', 'baseURL', 
+    function($scope, stepFactory, baseURL) {
 
-			$scope.baseURL = baseURL;
+      $scope.baseURL = baseURL;
       
-      eventFactory.query({
+      stepFactory.query({
           featured: "true"
         },
         function (response) {
-            var events = response;
+            var steps = response;
             
-            for (var i=0; i < events.length; i++) {
-              if (events[i].status == 1) {
-                $scope.event = events[i];
+            for (var i=0; i < steps.length; i++) {
+              if (steps[i].status == 1) {
+                $scope.step = steps[i];
                 break;
               }
             }
@@ -115,30 +115,24 @@ angular.module('myRea.controllers', [])
       $scope.currentStatusOfDeal = function() {
         return 'On Track';
       };
-		}
-	]
+    }
+  ]
 )
 
-.controller('eventsController', 
-    ['$scope', '$rootScope', 'events', 'baseURL', 
-		function($scope, $rootScope, events, baseURL) {
+.controller('stepsController', 
+    ['$anchorScroll', '$location', '$scope', '$rootScope', 'steps', 'baseURL', 
+    function($anchorScroll, $location, $scope, $rootScope, steps, baseURL) {
 
-			$scope.baseURL = baseURL;
-			$scope.showDetails = false;
-			$scope.events = events;
+      $scope.baseURL = baseURL;
+      $scope.steps = steps;
 
-			$scope.toggleDetails = function() {
-				$scope.showDetails = !$scope.showDetails;
-			};
-
-			console.log($scope.events);
-      
       $scope.$on('$ionicView.beforeEnter', function (e, data) { 
         $rootScope.myTitle = 'Timeline';
-      });      
-
-		}
-	]
+      }); 
+      
+      console.log($scope.steps);
+    }
+  ]
 )
 
 .controller('MenuCtrl', function($scope, $rootScope, $ionicHistory, $state) {
@@ -149,25 +143,25 @@ angular.module('myRea.controllers', [])
   }
 })
 
-.controller('eventDetailsController', 
-	['$scope', '$rootScope', '$stateParams', 'event', 'eventFactory', 'baseURL', '$ionicModal', '$ionicPlatform', 
-		function ($scope, $rootScope, $stateParams, event, eventFactory, baseURL, $ionicModal, $ionicPlatform) {
-			$scope.baseURL = baseURL;
-			$scope.event = event;
-			$scope.showEvent = false;
-			$scope.message="Loading event details...";
-			
-			$scope.event = eventFactory.get({id:$stateParams.id})
-			.$promise.then(
-							function(response){
-								$scope.event = response;
-								$scope.showEvent = true;
+.controller('stepDetailsController', 
+  ['$scope', '$rootScope', '$stateParams', 'step', 'stepFactory', 'baseURL', '$ionicModal', '$ionicPlatform', 
+    function ($scope, $rootScope, $stateParams, step, stepFactory, baseURL, $ionicModal, $ionicPlatform) {
+      $scope.baseURL = baseURL;
+      $scope.step = step;
+      $scope.showStep = false;
+      $scope.message="Loading step details...";
+      
+      $scope.step = stepFactory.get({id:$stateParams.id})
+      .$promise.then(
+              function(response){
+                $scope.step = response;
+                $scope.showStep = true;
                 $rootScope.myTitle = response.name; 
-							},
-							function(response) {
-								$scope.message = "Error: "+response.status + " " + response.statusText;
-							}
-			);  
+              },
+              function(response) {
+                $scope.message = "Error: "+response.status + " " + response.statusText;
+              }
+      );  
       
       $scope.$on('$ionicView.loaded', function (e, data) { 
         $rootScope.enableRightSideMenu = false;
@@ -178,7 +172,7 @@ angular.module('myRea.controllers', [])
         $rootScope.enableRightSideMenu = true;
         $rootScope.showHome = false;
       }); 
-		}
-	]
+    }
+  ]
 )
 ;

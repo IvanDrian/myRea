@@ -2,8 +2,8 @@
 
 angular.module('myRea.services', ['ngResource'])
     .constant("baseURL","http://localhost:3000/")
-    .factory('eventFactory', ['$resource', 'baseURL', function ($resource, baseURL) {
-        return $resource(baseURL + "events/:id", null, {
+    .factory('stepFactory', ['$resource', 'baseURL', function ($resource, baseURL) {
+        return $resource(baseURL + "steps/:id", null, {
             'update': {
                 method: 'PUT'
             }
