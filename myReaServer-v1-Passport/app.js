@@ -19,7 +19,7 @@ db.once('open', function () {
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var eventRouter = require('./routes/eventRouter');
+var stepRouter = require('./routes/stepRouter');
 var participantRouter = require('./routes/participantRouter');
 
 var app = express();
@@ -48,7 +48,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/events', eventRouter);
+app.use('/steps', stepRouter);
 app.use('/participants', participantRouter);
 
 //info
