@@ -1,0 +1,21 @@
+<ion-view>
+  <ion-nav-title>{{$root.myTitle}}</ion-nav-title>
+  <ion-content>
+  <div class="list list-inset">
+    <div class="item item-divider">
+      Steps
+    </div>
+
+    <ion-item ng-repeat="step in steps" href="#/app/steps/{{step._id}}">
+      <div>
+        <p><strong>{{step.name}}</strong><br>
+        <div class="item-text-wrap">{{step.description}}</div>
+        <p><strong>Status: </strong>{{satusName(step.status)}}</p>  
+        <p><strong>Start: </strong>{{step.start | date:'MMM. dd, yyyy'}}</p>
+        <p><strong>End:&nbsp;&nbsp;&nbsp;</strong>{{step.end | date:'MMM. dd, yyyy'}}</p>
+      </div>
+    </ion-item>
+  </div>
+  </ion-content>
+</ion-view>
+

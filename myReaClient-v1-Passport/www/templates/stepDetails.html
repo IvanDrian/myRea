@@ -1,0 +1,58 @@
+<ion-view >
+<!-- This never works fro parent-child. need to modify parent. see steps.html-->
+  <ion-nav-title>{{myTitle}}</ion-nav-title>
+
+  <ion-content>
+      <div class="item item-body item-text-wrap">
+        <p><b>{{step.description}}</p>
+      </div>
+    
+    <div class="row">
+      <div class="col col-offset-11">
+        <h4>Prerequisites</h4>
+        <ul class="list">
+          <li ng-repeat="prerequisite in step.prerequisites">
+            <ion-checkbox ng-checked="prerequisite.isCompleted" ng-model="prerequisite.isCompleted">{{prerequisite.description}}</ion-checkbox>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col col-offset-12">
+        <h4>To Do</h4>
+        <ul class="list">
+          <li ng-repeat="todo in step.todos">
+            <ion-checkbox ng-checked="todo.isCompleted" ng-model="todo.isCompleted">{{todo.description}}</ion-checkbox>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col col-offset-11">
+        <h4>Participants</h4>
+          <ul class="list">
+            <li ng-repeat="participant in step.participants">
+              <div class="item item-avatar" >
+                <img ng-src="{{baseURL+participant.image}}">
+                <p><strong>{{participant.firstName}} {{participant.lastName}}<strong><br>
+                <strong><small>{{participant.role}}</small></strong></p> 
+                <div class="item-text-wrap">{{participant.roleDescription}}</div>
+                <div class="button-bar">
+                   <a class="button button-positive button-small icon ion-android-call"></a>
+                   <a class="button button-assertive button-small icon ion-android-mail"></a>
+                   <a class="button button-energized button-small icon ion-android-chat"></a>
+                </div>              
+              </div>                
+            </li>
+          </ul>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>
+
+
+
+
