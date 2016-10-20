@@ -23,7 +23,7 @@ var dealSchema = new Schema({
     required: true,
     default: 0
   },
-  events:[eventSchema]
+  steps:[stepSchema]
 }, {
     timestamps: true
 });

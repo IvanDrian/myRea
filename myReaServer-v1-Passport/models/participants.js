@@ -11,6 +11,11 @@ var participantSchema = new Schema({
         type: String,
         required: true
     }, 
+    image: {
+        type: String,
+        required: false,
+        default: 'images/realtor_logo.png'
+    },
     role:  {
         type: String,
         required: true
